@@ -3,6 +3,7 @@
 " Author:       Nate Soares <http://so8r.es>
 " Version:      1.0
 " License:      The same as vim itself. (See |license|)
+" GetLatestVimScripts: 4249 1 :AutoInstall: write.zip
 
 if exists("g:loaded_write") || &cp || v:version < 700
 	finish
