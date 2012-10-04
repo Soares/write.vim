@@ -3,48 +3,45 @@
 Author:  Nate Soares <http://so8r.es/>
 License: Same terms as Vim itself (see |license|)
 
+==============================================================================
 INTRODUCTION                                    *write*
 
 Vim writing mode, for writing non-code text (books, novels, etc.).
 
+
+==============================================================================
 COMMANDS                                        *write-commands*
 
-						*write-:WriteOn*
-:WriteOn                Turn writing mode on. This does the following:
-			- soft wrap lines
-			- make j & k navigate screenwise, not linewise
-			- turn selling on
-			- turn line numbers off
-			As well as a few other tweaks that make writing easier.
-
-
-						*write-:WriteOff*
-:WriteOff               Turn writing mode off. Resets all values changed by
-			:WriteOn (which are changed locally) to the global
-			values.
-
-						*write-:Write*
-:Write                  Toggles writing mode.
-
-
+						*:WriteOn*
 Turn writing mode on. This does the following:
+- soft wrap lines
+- make j & k navigate screenwise, not linewise
+- turn spelling on
+- turn line numbers off
+As well as a few other tweaks that make writing easier.
 
-FUNCTIONS                                       *write-Functions*
+						*:WriteOff*
+Turn writing mode off. Resets all values changed by :WriteOn (which are
+changed locally) to the global values.
 
-                                                *write#On*
-write#On                Turn writing mode on.
-
-                                                *write#Off*
-write#Off               Turn writing mode off.
-
-                                                *write#Toggle*
-write#Toggle            Toggle writing mode.
-
-						*write#Writing*
-write#Writing           True if writing mode is activated.
-                        Useful for statusline flags and/or other plugins.
+						*:Write*
+Toggles writing mode.
 
 
+==============================================================================
+EXTRAS                                          *write-extras*
+
+                                                *write#Writing*
+True if writing mode is on. Useful for statusline flags. We recommend adding
+something like >
+	set statusline+=%#ModeMsg#
+	set statusline+=%{write#Writing()?'[W]':''}
+	set statusline+=%*
+<
+to your statusline.
+
+
+==============================================================================
 ABOUT						*write-about*
 
 Grab the latest version or report a bug on GitHub:
