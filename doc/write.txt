@@ -1,45 +1,87 @@
 *write.txt*  Get your author on.
+*write* *write.vim*
 
 Author:  Nate Soares <http://so8r.es/>
 License: Same terms as Vim itself (see |license|)
+
+=============================================================================
+CONTENTS                                        *write-contents*
+	    1. Introduction................................|write-intro|
+	    2. Configuration...............................|write-config|
+	    3. Commands....................................|write-commands|
+	    4. Extras......................................|write-extras|
+	    5. About.......................................|write-about|
 
 ==============================================================================
 INTRODUCTION                                    *write*
 
 Vim writing mode, for writing non-code text (books, novels, etc.).
 
+==============================================================================
+CONFIGURATION                                   *write-commands*
+
+						*g:write_auto*
+A list of filetypes that should automatically go into write mode. If the
+filetype string ends with a '!', that filetype will automatically go into full
+write mode. For example: >
+	let g:write_auto=['markdown', 'help', 'text!']
+<
+Will set up autocommands on markdown, help, and text files to put them into
+write mode, and text files will be forced into full write mode regardless of
+|textwidth| settings.
+
 
 ==============================================================================
 COMMANDS                                        *write-commands*
 
-						*:WriteOn*
-Turn writing mode on. This does the following:
-- soft wrap lines
-- make j & k navigate screenwise, not linewise
-- turn spelling on
-- turn line numbers off
-As well as a few other tweaks that make writing easier.
+						*:WriteOn[!]*
+Turn writing mode on. There are two writing mode styles: full and partial.
+
+Partial writing mode turns on spell checking and a number of enhancements that
+make writing mode more comfortable (line wrapping, intuitive cursor movement
+over long lines, some display tweaks for long paragraphs, etc.).
+
+Full writing mode sets all of the same enhancements as partial mode and also
+turns off line numbers and hard text wrapping.
+
+Write.vim tries to autodetect your writing style by checking the |textwidth|
+setting. If you |textwidth| is nonzero then Write.vim assumes that you want to
+hard wrap your lines and goes into partial writing mode. To force full writing
+mode, use >
+	:WriteOn!
+<
+If you want |textwidth| automatically managed by filetype, check out the
+|longlines| plugin at <http://github.com/Soares/longlines.vim>.
 
 						*:WriteOff*
-Turn writing mode off. Resets all values changed by :WriteOn (which are
-changed locally) to the global values.
+Turn writing mode off. Resets all values changed by :WriteOn.
 
-						*:Write*
-Toggles writing mode.
+NOTE: Writing mode makes all setting changes locally. When turning writing
+mode off, settings will be reset to their global values. If you have local
+settings that interfere with writer (i.e. you have ':set nospell' and
+':setlocal spell') then write mode will clobber those local settings.
 
+						*:Write[!]*
+Toggles writing mode. The bang, if given, will be passed to |:WriteOn|
 
 ==============================================================================
 EXTRAS                                          *write-extras*
 
-                                                *write#Writing*
-True if writing mode is on. Useful for statusline flags. We recommend adding
-something like >
+Status Line                                     *write#Writing*
+						*write-statusline*
+Returns non-zero if writing mode is on. Useful for statusline flags. We
+recommend adding something like >
 	set statusline+=%#ModeMsg#
 	set statusline+=%{write#Writing()?'[W]':''}
 	set statusline+=%*
 <
 to your statusline.
 
+Mappings                                        *write-mappings*
+Write.vim does not provide mappings for you. You'll have to set them yourself.
+We suggest something along the lines of: >
+	noremap <leader>W :Write<CR>
+<
 
 ==============================================================================
 ABOUT						*write-about*
