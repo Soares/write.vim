@@ -9,9 +9,10 @@ recommended that you add your own mappings to trigger these commands, such as:
 
     noremap <leader>w :WriteOn
     noremap <leader>W :WriteOff
-    
+
 or
 
     noremap <leader>w :Write
 
-to toggle writer mode.
+to toggle writer mode. Statusline hooks are also provided. See doc/write.vim for
+details.
