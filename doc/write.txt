@@ -26,12 +26,6 @@ CONFIGURATION					*write-commands*
 Use this to disable the plugin entirely: >
 	let g:loaded_write = 1
 <
-						*g:write_without_statusline*
-If true, disable the statusline while writing.
-This is enabled by default because |laststatus| can not be set locally. The
-statusline will be turned off for all windows. This may be disorienting.
-If you want the statusline off only when the writing window is the only
-window you should 'set laststatus=1' instead.
 
 						*g:write_auto*
 A list of filetypes that should automatically go into write mode. If the
@@ -76,6 +70,10 @@ Toggles writing mode. The bang, if given, will be passed to |:WriteOn|
 ==============================================================================
 STATUSLINE					*write-statusline*
 
+This plugin does not disable your statusline, because the statusline can not
+be disabled for only one window. If you want to turn the statusline off see
+the |laststatus| variable and set it to 0 or 1 yourself.
+
 						*write#statusline()*
 Returns '[W]' if write mode is on, '' otherwise. Perfect for use in
 a statusline. Use >
@@ -83,7 +81,7 @@ a statusline. Use >
 	set statusline+=%{write#statusline()}
 	set statusline+=%*
 <
-to add this flag to your statuslien.
+to add this flag to your statusline.
 
 ==============================================================================
 MAPPINGS					*write-mappings*

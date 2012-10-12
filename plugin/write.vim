@@ -9,11 +9,6 @@ endif
 let g:loaded_write = 1
 
 
-if !exists('g:write_without_statusline')
-	let g:write_without_statusline = 0
-endif
-
-
 if !exists('g:write_auto')
 	let g:write_auto = []
 endif

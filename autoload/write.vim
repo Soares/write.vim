@@ -8,10 +8,6 @@ let g:write#autoloaded = 1
 " @param {string} bang Whether or not to force full writing mode.
 function! write#start(bang)
 	setlocal spell wrap display+=lastline nolist linebreak
-	if g:write_without_statusline
-		let b:write_laststatus_bak = &laststatus
-		set laststatus=0
-	endif
 	if !empty(a:bang) || &tw == 0
 		setlocal tw=0 nonu nornu
 		let b:writing=2
@@ -27,10 +23,10 @@ endfunction
 " Will only undo changes that write.vim made.
 function! write#stop()
 	if b:writing == 2
-		setlocal tw< nonu< nornu<
-	endif
-	if g:write_without_statusline
-		let &laststatus = b:write_laststatus_bak
+		if &tw == 0
+			setlocal tw<
+		endif
+		setlocal nonu< nornu<
 	endif
 	setlocal spell< wrap< display< list< linebreak<
 	let b:writing=0
