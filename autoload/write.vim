@@ -5,11 +5,14 @@ let g:write#autoloaded = 1
 
 
 " Sets the buffer as writer-friendly.
-" Args:
-"  {string} bang Whether or not to force full writing mode.
-function! write#On(bang)
+" @param {string} bang Whether or not to force full writing mode.
+function! write#start(bang)
 	setlocal spell wrap display+=lastline nolist linebreak
-	if a:bang != '' || &tw == 0
+	if g:write_without_statusline
+		let b:write_laststatus_bak = &laststatus
+		set laststatus=0
+	endif
+	if !empty(a:bang) || &tw == 0
 		setlocal tw=0 nonu nornu
 		let b:writing=2
 	else
@@ -22,9 +25,12 @@ endfunction
 
 " Unsets the buffer as writer-friendly.
 " Will only undo changes that write.vim made.
-function! write#Off()
+function! write#stop()
 	if b:writing == 2
 		setlocal tw< nonu< nornu<
+	endif
+	if g:write_without_statusline
+		let &laststatus = b:write_laststatus_bak
 	endif
 	setlocal spell< wrap< display< list< linebreak<
 	let b:writing=0
@@ -34,30 +40,27 @@ endfunction
 
 
 " Toggles write mode.
-" Args:
-"   {string} bang Whether or not to force full writing mode.
-function! write#Toggle(bang)
+" @param {string} bang Whether or not to force full writing mode.
+function! write#toggle(bang)
 	if exists('b:writing') && b:writing > 0
-		call write#Off()
+		call write#stop()
 	else
-		call write#On(bang)
+		call write#start(bang)
 	endif
 endfunction
 
 
 " Toggles writing mode only if writing has never been set for this buffer
-" Args:
-"   {string} bang Whether or not to force full writing mode.
-function! write#Reenter(bang)
+" @param {string} bang Whether or not to force full writing mode.
+function! write#restart(bang)
 	if !exists('b:writing')
-		call write#On(a:bang)
+		call write#start(a:bang)
 	endif
 endfunction
 
 
-" Checks if write mode is on.
-" Returns:
-"   Nonzero if and only if write mode is on.
-function! write#Writing()
-	return b:writing
+" Makes a statusline flag if writin mode is on.
+" @return {string}
+function! write#statusline()
+	return b:writing ? '[W]' : ''
 endfunction
