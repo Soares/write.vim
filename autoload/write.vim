@@ -49,9 +49,14 @@ endfunction
 " Toggles writing mode only if writing has never been set for this buffer
 " @param {string} bang Whether or not to force full writing mode.
 function! write#restart(bang)
-	if !exists('b:writing')
-		call write#start(a:bang)
+	if exists('b:write_ft') && b:write_ft == &ft
+		return
 	endif
+	if exists('b:writing') && b:writing
+		call write#stop()
+	endif
+	call write#start(a:bang)
+	let b:write_ft = &ft
 endfunction
 
 
