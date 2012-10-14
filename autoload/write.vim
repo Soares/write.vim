@@ -41,7 +41,7 @@ function! write#toggle(bang)
 	if exists('b:writing') && b:writing > 0
 		call write#stop()
 	else
-		call write#start(bang)
+		call write#start(a:bang)
 	endif
 endfunction
 
