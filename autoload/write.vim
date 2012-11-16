@@ -1,9 +1,3 @@
-if exists("g:write#autoloaded") || &cp || v:version < 700
-	finish
-endif
-let g:write#autoloaded = 1
-
-
 " Sets the buffer as writer-friendly.
 " @param {string} bang Whether or not to force full writing mode.
 function! write#start(bang)
@@ -57,11 +51,4 @@ function! write#restart(bang)
 	endif
 	call write#start(a:bang)
 	let b:write_ft = &ft
-endfunction
-
-
-" Makes a statusline flag if writin mode is on.
-" @return {string}
-function! write#statusline()
-	return b:writing ? '[W]' : ''
 endfunction

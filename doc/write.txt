@@ -74,14 +74,19 @@ This plugin does not disable your statusline, because the statusline can not
 be disabled for only one window. If you want to turn the statusline off see
 the |laststatus| variable and set it to 0 or 1 yourself.
 
-						*write#statusline()*
-Returns '[W]' if write mode is on, '' otherwise. Perfect for use in
-a statusline. Use >
+write#status#flag()				*write#status#flag()*
+	An alias for |write#status#info()|. If other statusline flags are
+	added, write#status#flag() will return the first non-empty flag in
+	decreasing order of severity.
+
+write#status#info()				*write#status#info()*
+	[W]	if write mode is on.
+	Use as follows:
+>
 	set statusline+=%#ModeMsg#
-	set statusline+=%{write#statusline()}
+	set statusline+=%{write#status$info()}
 	set statusline+=%*
 <
-to add this flag to your statusline.
 
 ==============================================================================
 MAPPINGS					*write-mappings*
@@ -97,8 +102,8 @@ filetypes. It's more effective than such a key mapping.
 EXTRAS                                          *write-extras*
 
 You may check the 'b:writing' variable to see if writing mode is currently
-enabled. You can use this to write your own statusline functions if you do not
-like the style of |write#statusline()|.
+enabled. You can use this to write your own statusline flags if you do not
+like the style of |write#status#flag()|.
 
 ==============================================================================
 ABOUT						*write-about*
