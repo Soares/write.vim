@@ -20,7 +20,7 @@ Vim writing mode, for writing non-code text (books, novels, etc.).
 GUI not required.
 
 ==============================================================================
-CONFIGURATION					*write-commands*
+CONFIGURATION					*write-config*
 
 						*g:loaded_write*
 Use this to disable the plugin entirely: >
